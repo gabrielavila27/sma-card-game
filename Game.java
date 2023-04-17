@@ -6,6 +6,7 @@ package cardgame;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -28,8 +29,8 @@ public class Game{
         this.playerOneDeck = new ArrayList();
         this.playerCpuDeck = new ArrayList();
         this.random = new Random();
-        this.winnerCard = new Queue(6);
-        this.winnerPlayer = new Stack(6);
+        this.winnerCard = new Queue(5);
+        this.winnerPlayer = new Stack(5);
     }
     
   
@@ -39,7 +40,7 @@ public class Game{
         List <BasketballCards> shuffleDeck = new ArrayList(4);
         BasketballCards curry= new BasketballCards("Stephen Curry", 99, 98, 64, 99,85);
         BasketballCards lebron= new BasketballCards("Lebron James", 93, 97,99,94, 97);
-        BasketballCards durant= new BasketballCards("Kevin Durant", 99, 98,95,95, 75);
+        BasketballCards durant= new BasketballCards("Kevin Durant", 99, 98,95,95, 90);
         BasketballCards luka= new BasketballCards("Luka Doncic", 95, 95, 93, 95, 88);
         BasketballCards giannis= new BasketballCards("Giannis Antetokounmpo", 84, 97, 97, 92, 92);
         BasketballCards kawai= new BasketballCards("Kawai Leonard", 95, 94, 97, 94, 98);
@@ -62,13 +63,15 @@ public class Game{
     
     void start() throws InterruptedException{
         Scanner inp = new Scanner(System.in);
-        System.out.println( "Welcome to the Super Mega Awesome card game!");
+        System.out.println( "Welcome to the basketball version of the Super Mega Awesome card game!");
         System.out.println("To get started please tell us your name: ");
         String input = inp.nextLine();
         this.playerOne = new User(input);
-        System.out.println("Thank you for your company "+ input + "! Now it's time to shuffle the cards!");
+        System.out.println("Thank you for your company "+ input + "!");
+        System.out.println("Now it's time to shuffle the cards ");
         Thread.sleep(1000);
-        System.out.println("Shuffling cards...");
+        System.out.println("");
+        System.out.println("Shuffling the cards...");
     }
     
     void battle() throws InterruptedException{
@@ -76,7 +79,7 @@ public class Game{
             //Stop condition
             if(playerOneDeck.isEmpty() && this.playerCpuDeck.isEmpty()){
                 System.out.println(" ");
-                System.out.println("Error! You must Shuffle the deck and ask for the cards before start a battle. Try again.");
+                System.out.println("Error! You must Shuffle the deck and ask for the cards before starting the battle. Try again.");
                 System.exit(0);
                 break;
             }else if(this.playerOneDeck.isEmpty()){
@@ -85,14 +88,15 @@ public class Game{
                 System.out.println("CPU won!");
                 System.out.println("Game over");
                 System.out.println(" ");
-                Thread.sleep(1000);
+                Thread.sleep(1500);
                 System.out.println(this.playerOne.toString());
                 System.out.println(this.playerCpu.toString());
-                Thread.sleep(1000);
+                Thread.sleep(1500);
                 System.out.println(" ");
                 System.out.println("Round Winners(Cards): ");
                 this.winnerCard.printQueue();
                 System.out.println(" ");
+                Thread.sleep(1500);
                 System.out.println("Round Winners(Players): ");
                 this.winnerPlayer.stackPrint();
                 break;
@@ -102,18 +106,20 @@ public class Game{
                 System.out.println("You won!");
                 System.out.println("CPU defeated!");
                 System.out.println(" ");
-                Thread.sleep(1000);
+                Thread.sleep(1500);
                 System.out.println(this.playerOne.toString());
                 System.out.println(this.playerCpu.toString());
                 System.out.println(" ");
-                Thread.sleep(1000);
+                Thread.sleep(1500);
                 System.out.println("Round winners(Cards): ");
                 this.winnerCard.printQueue();
                 System.out.println("");
+                Thread.sleep(1500);
                 System.out.println("Round Winners(Players): ");
                 this.winnerPlayer.stackPrint();
                 break;
             } else{
+                try{
                 Scanner input = new Scanner(System.in);
                 //Printing player's deck
                 System.out.println(" ");
@@ -129,14 +135,14 @@ public class Game{
                 System.out.println("");
                 //First menu
                 Thread.sleep(1000);
-                System.out.println("Now is time to pick the attribute of the card that you wanna compare with your opponent's one.");
+                System.out.println("Now it's time to choose the attribute of the card that you want to compare with your opponent's one.");
                 System.out.println("Press [0] for Shot");
                 System.out.println("Press [1] for Layup");
                 System.out.println("Press [2] for Dunk");
                 System.out.println("Press [3] for Handles");
                 System.out.println("Press [4] for defense");
-                System.out.println("Your anwser: ");
-                int playerInputAttribute = input.nextInt();
+                System.out.println("Your answer: ");
+                int playerInputAttribute = input.nextInt();              
                 //Switch case
                
                         if(playerInputAttribute == 0){
@@ -150,7 +156,7 @@ public class Game{
                                 System.out.println(" ");
                                 Thread.sleep(2000);
                                 System.out.println("Round winner = " + this.playerOne.getName() + " congratulations!");
-                                System.out.println("Round looser = " + this.playerCpu.getName());
+                                System.out.println("Round loser = " + this.playerCpu.getName());
                                 System.out.println("Cpu = -1 Card");
                                 this.playerOne.wins++; 
                                 this.playerCpu.losses++;
@@ -166,7 +172,7 @@ public class Game{
                                 System.out.println(" ");
                                 Thread.sleep(2000);
                                 System.out.println("Round winner = " + this.playerCpu.getName());
-                                System.out.println("Round looser = " + this.playerOne.getName());
+                                System.out.println("Round loser = " + this.playerOne.getName());
                                 System.out.println(this.playerOne.getName() + " = -1 Card");
                                 this.playerOne.losses++;
                                 this.playerCpu.wins++;
@@ -191,7 +197,7 @@ public class Game{
                                 System.out.println(" ");
                                 Thread.sleep(2000);
                                 System.out.println("Round winner = " + this.playerOne.getName() + " congratulations!");
-                                System.out.println("Round looser = " + this.playerCpu.getName());
+                                System.out.println("Round loser = " + this.playerCpu.getName());
                                 System.out.println("Cpu = -1 Card");
                                 this.playerOne.wins++; 
                                 this.playerCpu.losses++;
@@ -207,7 +213,7 @@ public class Game{
                                 System.out.println(" ");
                                 Thread.sleep(2000);
                                 System.out.println("Round winner = " + this.playerCpu.getName());
-                                System.out.println("Round looser = " + this.playerOne.getName());
+                                System.out.println("Round loser = " + this.playerOne.getName());
                                 System.out.println(this.playerOne.getName() + " = -1 Card");
                                 this.playerOne.losses++;
                                 this.playerCpu.wins++;
@@ -235,7 +241,7 @@ public class Game{
                                 System.out.println(" ");
                                 Thread.sleep(2000);
                                 System.out.println("Round winner = " + this.playerOne.getName() + " congratulations!");
-                                System.out.println("Round looser = " + this.playerCpu.getName());
+                                System.out.println("Round loser = " + this.playerCpu.getName());
                                 System.out.println("Cpu = -1 Card");
                                 this.playerOne.wins++; 
                                 this.playerCpu.losses++;
@@ -251,7 +257,7 @@ public class Game{
                                 System.out.println(" ");
                                 Thread.sleep(2000);
                                 System.out.println("Round winner = " + this.playerCpu.getName());
-                                System.out.println("Round looser = " + this.playerOne.getName());
+                                System.out.println("Round loser = " + this.playerOne.getName());
                                 System.out.println(this.playerOne.getName() + " = -1 Card");
                                 this.playerOne.losses++;
                                 this.playerCpu.wins++;
@@ -278,7 +284,7 @@ public class Game{
                                 System.out.println(" ");
                                 Thread.sleep(2000);
                                 System.out.println("Round winner = " + this.playerOne.getName() + " congratulations!");
-                                System.out.println("Round looser = " + this.playerCpu.getName());
+                                System.out.println("Round loser = " + this.playerCpu.getName());
                                 System.out.println("Cpu = -1 Card");
                                 this.playerOne.wins++; 
                                 this.playerCpu.losses++;
@@ -294,7 +300,7 @@ public class Game{
                                 System.out.println(" ");
                                 Thread.sleep(2000);
                                 System.out.println("Round winner = " + this.playerCpu.getName());
-                                System.out.println("Round looser = " + this.playerOne.getName());
+                                System.out.println("Round loser = " + this.playerOne.getName());
                                 System.out.println(this.playerOne.getName() + " = -1 Card");
                                 this.playerOne.losses++;
                                 this.playerCpu.wins++;
@@ -322,7 +328,7 @@ public class Game{
                                 System.out.println(" ");
                                 Thread.sleep(2000);
                                 System.out.println("Round winner = " + this.playerOne.getName() + " congratulations!");
-                                System.out.println("Round looser = " + this.playerCpu.getName());
+                                System.out.println("Round loser = " + this.playerCpu.getName());
                                 System.out.println("Cpu = -1 Card");
                                 this.playerOne.wins++; 
                                 this.playerCpu.losses++;
@@ -338,7 +344,7 @@ public class Game{
                                 System.out.println(" ");
                                 Thread.sleep(2000);
                                 System.out.println("Round winner = " + this.playerCpu.getName());
-                                System.out.println("Round looser = " + this.playerOne.getName());
+                                System.out.println("Round loser = " + this.playerOne.getName());
                                 System.out.println(this.playerOne.getName() + " = -1 Card");
                                 this.playerOne.losses++;
                                 this.playerCpu.wins++;
@@ -356,11 +362,16 @@ public class Game{
                                 System.out.println("Draw!");}
                         }
                         else{
-                            System.out.println("Erro");
-                            break; 
+                            System.out.println("Error! You must enter an integer number from 0 to 4.Try again.");
+                         
                         
+                    };
+                    }catch(InputMismatchException e){
+                        System.out.println("Error! You must enter an integer number from 0 to 4. Try again.");
+
                     }
                 }
+                
           
             }
         }
