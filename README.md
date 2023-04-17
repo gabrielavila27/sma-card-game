@@ -12,7 +12,9 @@ até deixar o oponente sem cartas. No início do jogo, o jogador e a CPU recebem
 atual. Quem perder a rodada, perder uma carta. No final do jogo, ganha o jogador que ainda tiver cartas.
 
 ## Gameplay video
-> https://user-images.githubusercontent.com/87778979/231877775-19543e79-7cca-49b4-b177-12f5bcce1afd.mp4 
+> https://user-images.githubusercontent.com/87778979/232615411-d14dfbb9-105c-401a-986a-908c6f3a1760.mp4
+
+
 
 ## 👨‍💻 Technologies used
 - Java ☕
